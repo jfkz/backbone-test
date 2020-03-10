@@ -35,24 +35,10 @@ define([
 			this.listenTo(Panes, 'add', this.addPane);
 			this.listenTo(Panes, 'reset', this.addAllPanes);
 			this.listenTo(Panes, 'all', this.render);
+			this.listenTo(Backbone, 'pane:moveup', this.moveUp);
+			this.listenTo(Backbone, 'pane:movedown', this.moveDown);
 
 			Panes.fetch({reset:true});
-
-			/* Todos */
-			//
-			// // this.allCheckbox = this.$('#toggle-all')[0];
-			// this.$input = this.$('#new-todo');
-			// this.$footer = this.$('#footer');
-			// this.$main = this.$('#main');
-			// this.$todoList = this.$('#todo-list');
-			//
-			// this.listenTo(Todos, 'add', this.addOne);
-			// this.listenTo(Todos, 'reset', this.addAll);
-			// this.listenTo(Todos, 'change:completed', this.filterOne);
-			// this.listenTo(Todos, 'filter', this.filterAll);
-			// this.listenTo(Todos, 'all', this.render);
-			//
-			// Todos.fetch({reset:true});
 
 		},
 
@@ -65,31 +51,6 @@ define([
 			} else {
 				this.$panes.hide();
 			}
-
-			/* Todos */
-			//
-			// var completed = Todos.completed().length;
-			// var remaining = Todos.remaining().length;
-			//
-			// if (Todos.length) {
-			// 	this.$main.show();
-			// 	this.$footer.show();
-			//
-			// 	this.$footer.html(this.template({
-			// 		completed: completed,
-			// 		remaining: remaining
-			// 	}));
-			//
-			// 	this.$('#filters li a')
-			// 		.removeClass('selected')
-			// 		.filter('[href="#/' + (Common.TodoFilter || '') + '"]')
-			// 		.addClass('selected');
-			// } else {
-			// 	this.$main.hide();
-			// 	this.$footer.hide();
-			// }
-			//
-			// this.allCheckbox.checked = !remaining;
 		},
 
 		/* Panes */
@@ -104,70 +65,49 @@ define([
 			this.$panes.append(view.render().el);
 		},
 
-		// Add all items in the **Todos** collection at once.
+		swapModels: function (model1, model2) {
+			var orderSwap = model2.toJSON().order;
+			model2.save({
+				order: model1.toJSON().order
+			});
+			model1.save({
+				order: orderSwap
+			});
+			return true;
+		},
+
+		moveUp: function (pane) {
+			var model = pane.model;
+			let prevId = null;
+			for(var i in Panes.models) {
+				if (Panes.models[i] === model && prevId !== null) {
+					this.swapModels(model, Panes.models[prevId]);
+					Panes.fetch({reset:true});
+					return;
+				}
+				prevId = i;
+			}
+		},
+
+		moveDown: function (pane) {
+			var model = pane.model;
+			let prevId = null;
+			for(var i in Panes.models) {
+				if (prevId !== null) {
+					this.swapModels(Panes.models[prevId], Panes.models[i]);
+					Panes.fetch({reset:true});
+					return;
+				}
+				if (Panes.models[i] === model) {
+					prevId = i;
+				}
+			}
+		},
+
 		addAllPanes: function () {
 			this.$panes.empty();
 			Panes.each(this.addPane, this);
 		},
-
-		/* Todos rudiments */
-
-	// 	// Add a single todo item to the list by creating a view for it, and
-	// 	// appending its element to the `<ul>`.
-	// 	addOne: function (todo) {
-	// 		var view = new TodoView({ model: todo });
-	// 		this.$todoList.append(view.render().el);
-	// 	},
-	//
-	// 	// Add all items in the **Todos** collection at once.
-	// 	addAll: function () {
-	// 		this.$todoList.empty();
-	// 		Todos.each(this.addOne, this);
-	// 	},
-	//
-	// 	filterOne: function (todo) {
-	// 		todo.trigger('visible');
-	// 	},
-	//
-	// 	filterAll: function () {
-	// 		Todos.each(this.filterOne, this);
-	// 	},
-	//
-	// 	// Generate the attributes for a new Todo item.
-	// 	newAttributes: function () {
-	// 		return {
-	// 			title: this.$input.val().trim(),
-	// 			order: Todos.nextOrder(),
-	// 			completed: false
-	// 		};
-	// 	},
-	//
-	// 	// If you hit return in the main input field, create new **Todo** model,
-	// 	// persisting it to *localStorage*.
-	// 	createOnEnter: function (e) {
-	// 		if (e.which !== Common.ENTER_KEY || !this.$input.val().trim()) {
-	// 			return;
-	// 		}
-	//
-	// 		Todos.create(this.newAttributes());
-	// 		this.$input.val('');
-	// 	},
-	//
-	// 	// Clear all completed todo items, destroying their models.
-	// 	clearCompleted: function () {
-	// 		_.invoke(Todos.completed(), 'destroy');
-	// 		return false;
-	// 	},
-	//
-	// 	toggleAllComplete: function () {
-	// 		// var completed = this.allCheckbox.checked;
-	//
-	// 		Todos.each(function (todo) {
-	// 			todo.save({
-	// 				completed: completed
-	// 			});
-	// 		});
-	// 	}
 	});
 
 	return AppView;

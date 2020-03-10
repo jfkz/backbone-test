@@ -2,7 +2,6 @@
   "private": true,
   "dependencies": {
     "backbone": "^1.1.2",
-    "backbone-uikit": "^2.0.23",
     "backbone.localstorage": "^1.1.16",
     "dotenv-load": "^2.0.0",
     "es5-shim": "^4.1.0",

@@ -7,7 +7,7 @@ class Pane extends Model {
   defaults() {
     return {
       title: '',
-      class: 'uk-container',
+      class: '',
       active: true,
       content: loremIpsum({ count: 5, units: "sentences" })
     };

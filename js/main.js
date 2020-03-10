@@ -5,7 +5,7 @@ import 'es5-shim';
 // import 'todomvc-app-css/index.css';
 
 import AppView from 'views/app';
-import TodoView from 'views/todo';
+// import TodoView from 'views/todo';
 import Backbone from 'backbone';
 import Workspace from 'routers/router';
 import $ from 'jquery';
