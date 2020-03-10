@@ -1,4 +1,4 @@
-# Backbone.js & Webpack TodoMVC Example
+# Backbone.js & Webpack Tilda.cc Example
 
 This example uses Webpack to bundle all JavaScript and CSS dependencies in the app!
 
