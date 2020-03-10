@@ -2,6 +2,7 @@ import _ from 'underscore';
 import { Collection } from 'backbone';
 import Store from 'backbone.localstorage';
 import Pane from 'models/pane';
+import { loremIpsum } from "lorem-ipsum";
 
 class PanesCollection extends Collection {
   constructor(models, options) {
@@ -17,15 +18,31 @@ class PanesCollection extends Collection {
     super(models, options);
   }
 
-  // // Filter down the list of all todo items that are finished.
-  // completed() {
-  //   return this.where({completed: true});
-  // }
-  //
-  // // Filter down the list to only todo items that are still not finished.
-  // remaining() {
-  //   return this.where({completed: false});
-  // }
+  fabriq (paneClass) {
+    switch (paneClass) {
+      case 'cover':
+        return {
+          cover: 'images/1.jpg',
+          title: loremIpsum({ count: 5, units: "words" }),
+          header: loremIpsum({ count: 3, units: "words" }),
+          content: loremIpsum({ count: 1, units: "sentences" }),
+          order: this.nextOrder()
+        };
+      case 'title':
+        return {
+          title: loremIpsum({ count: 5, units: "words" }),
+          header: loremIpsum({ count: 3, units: "words" }),
+          content: loremIpsum({ count: 1, units: "sentences" }),
+          order: this.nextOrder()
+        };
+      case 'pane':
+      default:
+        return {
+          content: loremIpsum({ count: 5, units: "sentences" }),
+          order: this.nextOrder()
+        };
+    }
+  }
 
   // We keep the panes in sequential order, despite being saved by unordered
   // GUID in the database. This generates the next order number for new items.

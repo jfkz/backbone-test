@@ -23,6 +23,8 @@ define([
 		// Delegated events for creating new items, and clearing completed ones.
 		events: {
 			'click #add-pane': 'createPane',
+			'click #add-title': 'createTitle',
+			'click #add-cover': 'createCover',
 		},
 
 		// At initialization we bind to the relevant events on the `Todos`
@@ -55,9 +57,15 @@ define([
 
 		/* Panes */
 		createPane: function (e) {
-			Panes.create({
-				order: Panes.nextOrder()
-			});
+			Panes.create(Panes.fabriq('pane'));
+		},
+
+		createTitle: function (e) {
+			Panes.create(Panes.fabriq('title'));
+		},
+
+		createCover: function (e) {
+			Panes.create(Panes.fabriq('cover'));
 		},
 
 		addPane: function (pane) {

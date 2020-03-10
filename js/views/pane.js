@@ -34,7 +34,8 @@ define([
 		// Re-render the titles of the todo item.
 		render: function () {
 			this.$el.html(this.template(this.model.toJSON()));
-      this.$el.addClass(this.model.toJSON().class);
+      this.$el.addClass(this.model.getClass());
+      this.$el.attr(this.model.getCssProperties());
       return this;
 		},
 
@@ -44,6 +45,9 @@ define([
         if (value) {
           this.model.set(field, value);
           this.model.save();
+        } else {
+          console.log('fetxhing')
+          this.model.fetch();
         }
 		},
 

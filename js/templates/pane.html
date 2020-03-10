@@ -1,15 +1,26 @@
-<div class="pane-container uk-section uk-box-shadow-small <%= active ? '' : 'uk-section-muted' %>">
+<% if(cover) { %>
+  <img src="//test.re-coders.com/<%= cover %>" alt="" uk-cover>
+<% } %>
+<div class="pane-container uk-section <%= cover ? 'uk-overlay uk-light uk-position-center ' : 'uk-box-shadow-small' %> ">
   <div class="uk-container">
     <div class="uk-float-right">
-      <!-- <div class="uk-float-right"> -->
         <button class="pane-container__delete uk-button uk-button-danger uk-button-small"><i class="fas fa-trash"></i></button>
         <button class="pane-container__toggle uk-button uk-button-default uk-button-small"><i class="fas fa-toggle-<%= active ? 'on' : 'off' %>"></i></button>
         <button class="pane-container__up uk-button uk-button-default uk-button-small"><i class="fas fa-arrow-up"></i></button>
         <button class="pane-container__down uk-button uk-button-default uk-button-small"><i class="fas fa-arrow-down"></i></button>
-        <!-- </div> -->
       </div>
     </div>
+    <% if(title) { %>
+      <div id="title" class="pane-content uk-container uk-text-meta" contenteditable="true" >
+        <%= title %>
+      </div>
+    <% } %>
+    <% if(header) { %>
+      <h1 id="header" class="uk-heading-small" contenteditable="true"><%= header %></h1>
+    <% } %>
+    <% if(content) { %>
     <div id="content" class="pane-content uk-container" contenteditable="true" >
         <%= content %>
     </div>
+    <% } %>
 </div>

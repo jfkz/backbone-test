@@ -6,8 +6,6 @@ module.exports = {
   // Entry point for static analyzer
   entry: {
     app: [
-      `webpack-dev-server/client?http://${process.env.HOST}:${process.env.HRPORT}`,
-      'webpack/hot/dev-server',
       './js/main.js'
     ]
   },
@@ -36,9 +34,7 @@ module.exports = {
     }
   },
 
-  plugins: process.env.NODE_ENV == 'production' ? [
-     new webpack.HotModuleReplacementPlugin()
-  ] : null,
+  plugins: null,
 
   module: {
     preLoaders: [
