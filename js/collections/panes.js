@@ -44,10 +44,17 @@ class PanesCollection extends Collection {
     }
   }
 
+  clone(params) {
+    delete params.id;
+    params.order = params.order + (1 - (params.order - Math.floor(params.order))) / 2;
+    console.log(params.order);
+    return this.create(params);
+  }
+
   // We keep the panes in sequential order, despite being saved by unordered
   // GUID in the database. This generates the next order number for new items.
   nextOrder() {
-    return this.length ? this.last().get('order') + 1 : 1;
+    return this.length ? Math.ceil(this.last().get('order')) + 1 : 1;
   }
 }
 

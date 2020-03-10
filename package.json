@@ -10,8 +10,7 @@
     "lodash": "^3.5.0",
     "lorem-ipsum": "^2.0.3",
     "react": "^0.13.1",
-    "todomvc-app-css": "^1.0.0",
-    "todomvc-common": "^1.0.1"
+    "todomvc-app-css": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer-loader": "^1.2.0",

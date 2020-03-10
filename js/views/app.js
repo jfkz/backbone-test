@@ -6,8 +6,7 @@ define([
 	'collections/panes',
 	'views/pane',
 	'text!templates/controls.html',
-	'common'
-], function ($, _, Backbone, Panes, PaneView, controlsTemplate, Common) {
+], function ($, _, Backbone, Panes, PaneView, controlsTemplate) {
 	'use strict';
 
 	// Our overall **AppView** is the top-level piece of UI.
@@ -39,6 +38,7 @@ define([
 			this.listenTo(Panes, 'all', this.render);
 			this.listenTo(Backbone, 'pane:moveup', this.moveUp);
 			this.listenTo(Backbone, 'pane:movedown', this.moveDown);
+			this.listenTo(Backbone, 'pane:duplicate', this.duplicate);
 
 			Panes.fetch({reset:true});
 
@@ -46,7 +46,6 @@ define([
 
 		render: function () {
 			/* Panes */
-			console.log('>> RENDER APP <<');
 			this.$topControl.html(this.template());
 			if (Panes.length) {
 				this.$panes.show();
@@ -68,10 +67,17 @@ define([
 			Panes.create(Panes.fabriq('cover'));
 		},
 
+		duplicate: function (pane) {
+			var model = Panes.clone(pane.model.toJSON());
+			Panes.fetch({reset:true});
+			console.log(model);
+		},
+
 		addPane: function (pane) {
 			var view = new PaneView({ model: pane });
 			this.$panes.append(view.render().el);
 		},
+
 
 		swapModels: function (model1, model2) {
 			var orderSwap = model2.toJSON().order;

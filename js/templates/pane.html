@@ -1,9 +1,10 @@
 <% if(cover) { %>
-  <img src="//test.re-coders.com/<%= cover %>" alt="" uk-cover>
+  <img src="<%= cover %>" alt="" uk-cover>
 <% } %>
 <div class="pane-container uk-section <%= cover ? 'uk-overlay uk-light uk-position-center ' : 'uk-box-shadow-small' %> ">
   <div class="uk-container">
     <div class="uk-float-right">
+        <button class="pane-container__duplicate uk-button uk-button-default uk-button-small"><i class="fas fa-copy"></i></button>
         <button class="pane-container__delete uk-button uk-button-danger uk-button-small"><i class="fas fa-trash"></i></button>
         <button class="pane-container__toggle uk-button uk-button-default uk-button-small"><i class="fas fa-toggle-<%= active ? 'on' : 'off' %>"></i></button>
         <button class="pane-container__up uk-button uk-button-default uk-button-small"><i class="fas fa-arrow-up"></i></button>

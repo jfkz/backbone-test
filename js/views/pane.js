@@ -18,6 +18,7 @@ define([
       'blur [contenteditable*=true]':	'updateField',
       'click .pane-container__toggle': 'toggle',
       'click .pane-container__delete':	'clear',
+      'click .pane-container__duplicate':	'duplicate',
       'click .pane-container__up':	'goUp',
       'click .pane-container__down':	'goDown',
 		},
@@ -34,7 +35,7 @@ define([
 		// Re-render the titles of the todo item.
 		render: function () {
 			this.$el.html(this.template(this.model.toJSON()));
-      this.$el.addClass(this.model.getClass());
+      this.$el.attr('class', this.model.getClass());
       this.$el.attr(this.model.getCssProperties());
       return this;
 		},
@@ -57,6 +58,10 @@ define([
 
     goDown: function (e) {
       Backbone.trigger("pane:movedown", this);
+    },
+
+    duplicate: function () {
+      Backbone.trigger("pane:duplicate", this);
     },
 
 		// Toggle the `"completed"` state of the model.
