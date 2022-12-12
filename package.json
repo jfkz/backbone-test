@@ -18,7 +18,7 @@
     "babel-loader": "^4.2.0",
     "css-loader": "^0.9.1",
     "eslint-loader": "^0.7.0",
-    "express": "^4.12.3",
+    "express": "^4.17.3",
     "file-loader": "^0.8.1",
     "html-loader": "^0.2.3",
     "json-loader": "^0.5.1",
